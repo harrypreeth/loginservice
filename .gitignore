@@ -1,2 +1,3 @@
 # ignore prod env
 .env.prod
+.env.prod.db
