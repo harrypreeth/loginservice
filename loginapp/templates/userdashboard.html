@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}User Dashboard{% endblock %}
+
+{% block content %}
+<div class="card p-4 shadow-sm text-center">
+    <!-- Logout link -->
+    <span><a href="{% url 'logout' %}">Logout</a></span>
+    
+    <!-- Welcome message -->
+    <h3 class="mb-4">Welcome, {{ user.username }} !</h3>
+    
+    <!-- User details -->
+    <div class="user-details text-left">
+        <h5>Your Details:</h5>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Designation:</strong> {{ user.designation }}</p>
+        <p><strong>Company:</strong> {{ user.company }}</p>
+    </div>
+    
+    <!-- Find user section -->
+    <h4 class="mt-4">Find User</h4>
+    <form id="findUserForm" action="" method="POST" onsubmit="return validateForm()">
+        <!-- CSRF token for security -->
+        {% csrf_token %}
+        
+        <!-- Form group for the username input -->
+        <div class="form-group">
+            <input type="text" name="findUser" id="findUser" class="form-control" placeholder="Enter username to find" required>
+        </div>
+        
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary btn-lg btn-block mb-2">Find User</button>
+    </form>
+
+    <!-- Display found user details -->
+    <div id="foundUserDetails" class="mt-4">
+        {% if request.method == "POST" %}
+            {% if found_user %}
+                <h5>User Found!</h5>
+                <p>Username: {{ found_user.username }}</p>
+                <p>Email: {{ found_user.email }}</p>
+            {% else %}
+                <p>No user found with that username!</p>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+
+<!-- JavaScript function to submit the form -->
+<script>
+    function validateForm() {
+        var findUserInput = document.getElementById("findUser").value;
+        if (findUserInput === "{{ user.username }}") {
+            alert("You cannot search for yourself.");
+            return false; // Prevent form submission
+        }
+        return true; // Allow form submission
+    }
+</script>
+
+{% endblock %}

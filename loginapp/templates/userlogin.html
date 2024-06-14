@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="card p-4 shadow-sm text-center">
+    <!-- Title -->
+    <h3 class="mb-4">Standard User Login</h3>
+    
+    <!-- Login Form -->
+    <form id="loginForm" action="" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }} <!-- Display form fields as paragraphs -->
+    </form>
+    
+    <!-- Login Button -->
+    <button onclick="authenticateUser()" class="btn btn-primary btn-lg btn-block mb-2">Login</button>
+    
+    <!-- Display Messages -->
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+</div>
+
+<!-- JavaScript Function to Submit Form -->
+<script>
+    function authenticateUser() {
+        document.getElementById("loginForm").submit(); // Submit the form
+    }
+</script>
+{% endblock %}

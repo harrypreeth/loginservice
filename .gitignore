@@ -1,0 +1,2 @@
+# ignore prod env
+.env.prod
